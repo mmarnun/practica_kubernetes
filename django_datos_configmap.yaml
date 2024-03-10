@@ -1,5 +1,7 @@
 apiVersion: v1
 data:
+  django_email: admin@example.org
+  django_user: admin
   mysql_database: django
   mysql_user: django
 kind: ConfigMap

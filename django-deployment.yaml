@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: contenedor-django
-        image: mmarnun/django:161
+        image: mmarnun/django:v2
         env:
           - name: USUARIO_BD
             valueFrom:
@@ -38,8 +38,23 @@ spec:
               configMapKeyRef:
                 name: django-datos
                 key: mysql_database
+          - name: DJANGO_SUPERUSER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: django-secret
+                key: django_password                
+          - name: DJANGO_SUPERUSER_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: django-datos
+                key: django_user  
+          - name: DJANGO_SUPERUSER_EMAIL
+            valueFrom:
+              configMapKeyRef:
+                name: django-datos
+                key: django_email        
           - name: ALLOWED_HOSTS
-            value: "*"                
+            value: "*"                                                      
         ports:
           - name: http-server
             containerPort: 8000
