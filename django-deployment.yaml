@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django
+  labels:
+    app: django
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: django
+        tier: frontend
+    spec:
+      containers:
+      - name: contenedor-django
+        image: mmarnun/django:161
+        env:
+          - name: USUARIO_BD
+            valueFrom:
+              configMapKeyRef:
+                name: django-datos
+                key: mysql_user
+          - name: CONTRASENA_BD
+            valueFrom:
+              secretKeyRef:
+                name: django-secret
+                key: mysql_password
+          - name: HOST_BD
+            value: mariadb
+          - name: NOMBRE_BD
+            valueFrom:
+              configMapKeyRef:
+                name: django-datos
+                key: mysql_database
+          - name: ALLOWED_HOSTS
+            value: "*"                
+        ports:
+          - name: http-server
+            containerPort: 8000

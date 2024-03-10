@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  mysql_database: django
+  mysql_user: django
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: django-datos
